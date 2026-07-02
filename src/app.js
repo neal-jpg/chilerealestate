@@ -10,6 +10,7 @@ const state = {
   tab: 'listings',
   article: null,
   openHistory: new Set(),
+  openWhy: new Set(),
 };
 const data = {};
 let saved = loadSaved();
@@ -73,6 +74,11 @@ function render() {
     const slot = document.querySelector(`[data-history-for="${CSS.escape(id)}"]`);
     if (slot) slot.innerHTML = priceHistoryHtml(data.snapshots[id] || [], listingById()[id].first_seen);
   }
+  for (const id of state.openWhy) {
+    const slot = document.querySelector(`[data-why-for="${CSS.escape(id)}"]`);
+    const l = listingById()[id];
+    if (slot && l) slot.innerHTML = `<div class="why">${escapeHtml(l.opportunity_reason || '')}</div>`;
+  }
 }
 
 function onClick(e) {
@@ -97,6 +103,10 @@ function onClick(e) {
   } else if (action === 'history') {
     if (state.openHistory.has(id)) state.openHistory.delete(id);
     else state.openHistory.add(id);
+    render();
+  } else if (action === 'why') {
+    if (state.openWhy.has(id)) state.openWhy.delete(id);
+    else state.openWhy.add(id);
     render();
   } else if (action === 'article') {
     state.article = id;

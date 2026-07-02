@@ -54,6 +54,17 @@ def build(raw_listings, existing_listings, existing_snapshots, fx, run_date):
     return {"listings": listings, "snapshots": snapshots, "fx": fx, "meta": meta}
 
 
+def collect_raw(bp_listings, alert_listings):
+    """Merge raw listings from all sources, deduped by url (alert wins on a tie
+    since alert data is richer). Pure — callers pass in each source's output."""
+    by_url = {}
+    for r in bp_listings:
+        by_url[r["url"]] = r
+    for r in alert_listings:  # applied second so alert overrides on duplicate url
+        by_url[r["url"]] = r
+    return list(by_url.values())
+
+
 def _load(name, default):
     path = os.path.join(DATA_DIR, name)
     if not os.path.exists(path):
@@ -68,26 +79,40 @@ def _save(name, value):
         json.dump(value, f, ensure_ascii=False, indent=2)
 
 
-def main(run_date, raw_listings_path=None):
-    """Wire real IO: load prior state, fetch fx, read raw source, write outputs.
+def main(run_date, alert_csv_url=None, model_call=None):
+    """Wire real IO: fetch fx, scrape BuenasParcelas, extract alerts (if wired),
+    run build, write the four listing-side files + advance the alert watermark.
 
-    raw_listings_path defaults to the stub fixture until the scraper plan lands.
+    alert_csv_url / model_call are None until the Make->Sheet pipeline and the
+    cloud routine's Claude are wired (Plan 4); alerts are simply skipped until then.
     """
-    if raw_listings_path is None:
-        raw_listings_path = os.path.join(os.path.dirname(__file__),
-                                         "fixtures", "raw_listings.json")
-    with open(raw_listings_path, encoding="utf-8") as f:
-        raw_listings = json.load(f)
+    from .sources import buenasparcelas, alerts
+    from . import state as state_mod
 
+    state_path = os.path.join(DATA_DIR, "state.json")
+    st = state_mod.load_state(state_path)
+
+    fx = fetch_fx()
+    bp_listings = buenasparcelas.collect(config.TOWN_REGION)
+
+    alert_listings = []
+    if alert_csv_url and model_call:
+        import urllib.request
+        with urllib.request.urlopen(alert_csv_url, timeout=40) as resp:
+            csv_text = resp.read().decode("utf-8", errors="replace")
+        alert_listings, st["alert_watermark"] = alerts.collect_alerts(
+            csv_text, st["alert_watermark"], model_call)
+
+    raw_listings = collect_raw(bp_listings, alert_listings)
     existing_listings = _load("listings.json", [])
     existing_snapshots = _load("snapshots.json", {})
-    fx = fetch_fx()
 
     result = build(raw_listings, existing_listings, existing_snapshots, fx, run_date)
     _save("listings.json", result["listings"])
     _save("snapshots.json", result["snapshots"])
     _save("fx.json", result["fx"])
     _save("meta.json", result["meta"])
+    state_mod.save_state(state_path, st)
     return result
 
 

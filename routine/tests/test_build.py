@@ -39,3 +39,23 @@ def test_build_meta_flags_thin_regions_and_lists_regions():
 def test_build_fx_passthrough():
     result = build([], [], {}, FX, run_date="2026-07-01")
     assert result["fx"] == FX
+
+
+from routine.build import collect_raw
+
+
+def test_collect_raw_merges_scraper_and_alert_sources():
+    bp = [{"url": "bp1", "source": "BuenasParcelas"}]
+    al = [{"url": "al1", "source": "Yapo"}]
+    combined = collect_raw(bp_listings=bp, alert_listings=al)
+    urls = {r["url"] for r in combined}
+    assert urls == {"bp1", "al1"}
+
+
+def test_collect_raw_dedups_by_url_preferring_alert():
+    # if both sources somehow emit the same url, keep one (alert wins — richer)
+    bp = [{"url": "dup", "source": "BuenasParcelas"}]
+    al = [{"url": "dup", "source": "Yapo"}]
+    combined = collect_raw(bp_listings=bp, alert_listings=al)
+    assert len(combined) == 1
+    assert combined[0]["source"] == "Yapo"

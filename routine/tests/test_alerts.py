@@ -50,3 +50,30 @@ def test_parse_extraction_response_tolerates_code_fences_and_prose():
 def test_parse_extraction_response_bad_input_returns_empty():
     assert parse_extraction_response("no json here") == []
     assert parse_extraction_response('{"not":"an array"}') == []
+
+
+from routine.sources.alerts import extract_from_email, collect_alerts
+
+
+def _fake_model(prompt):
+    # ignores the prompt; returns a fixed listing so we test composition, not the model
+    return '[{"url":"https://yapo.cl/x1","raw_price":8900,"currency":"UF","comuna":"Pucón","class":"turnkey","source":"Yapo"}]'
+
+
+def test_extract_from_email_uses_model_call():
+    out = extract_from_email("body text", "alertas@yapo.cl", _fake_model)
+    assert out[0]["url"] == "https://yapo.cl/x1"
+
+
+def test_collect_alerts_processes_new_rows_and_advances_watermark():
+    csv_text = (
+        "received_at,sender,subject,body\r\n"
+        "2026-07-01T09:00:00,alertas@yapo.cl,S,old email\r\n"
+        "2026-07-02T09:00:00,alertas@yapo.cl,S,new email\r\n"
+    )
+    listings, new_wm = collect_alerts(csv_text, "2026-07-01T09:00:00", _fake_model)
+    assert len(listings) == 1                       # only the 2026-07-02 row is new
+    assert new_wm == "2026-07-02T09:00:00"          # watermark advanced to newest processed
+    # nothing new -> no listings, watermark unchanged
+    listings2, wm2 = collect_alerts(csv_text, new_wm, _fake_model)
+    assert listings2 == [] and wm2 == new_wm

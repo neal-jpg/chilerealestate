@@ -66,3 +66,25 @@ def parse_extraction_response(text):
     except ValueError:
         return []
     return data if isinstance(data, list) else []
+
+
+def extract_from_email(email_body, sender, model_call):
+    """Build the prompt, call the injected model, parse listings out of the reply."""
+    prompt = build_extraction_prompt(email_body, sender)
+    reply = model_call(prompt)
+    return parse_extraction_response(reply)
+
+
+def collect_alerts(csv_text, watermark, model_call):
+    """Read the alert CSV, extract listings from every row newer than the
+    watermark, and return (raw_listings, advanced_watermark)."""
+    rows = read_alert_csv(csv_text)
+    fresh = new_rows(rows, watermark)
+    listings = []
+    new_watermark = watermark
+    for row in fresh:
+        listings.extend(extract_from_email(row.get("body", ""), row.get("sender", ""), model_call))
+        rx = row.get("received_at") or ""
+        if rx > (new_watermark or ""):
+            new_watermark = rx
+    return listings, new_watermark

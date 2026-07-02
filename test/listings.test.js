@@ -70,3 +70,15 @@ test('card omits the image tag for an unsafe image_url scheme', () => {
   const html = cardHtml(evil, []);
   assert.doesNotMatch(html, /<img/);
 });
+
+test('turnkey card with no configured yield band omits the yield pill', () => {
+  const html = cardHtml({ ...turnkey, yield_band: null }, []);
+  assert.doesNotMatch(html, /pill--yield/);
+  assert.doesNotMatch(html, /null/);
+});
+
+test('parcela card with unknown size omits the price/m2 pill', () => {
+  const html = cardHtml({ ...parcela, price_per_m2_uf: null }, []);
+  assert.doesNotMatch(html, /pill--ppm/);
+  assert.doesNotMatch(html, /UF\/m²/);
+});

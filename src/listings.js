@@ -18,8 +18,12 @@ export function cardHtml(l, saved) {
   const typeIcon = isLand ? 'ti-map-2' : 'ti-home';
   const typeLabel = isLand ? 'Land' : 'House';
   const classPill = isLand
-    ? `<span class="pill pill--ppm"><i class="ti ti-ruler-2" aria-hidden="true"></i>${formatPerM2(l.price_per_m2_uf)}</span>`
-    : `<span class="pill pill--yield"><i class="ti ti-percentage" aria-hidden="true"></i>${escapeHtml(l.yield_band)}</span>`;
+    ? (l.price_per_m2_uf != null
+        ? `<span class="pill pill--ppm"><i class="ti ti-ruler-2" aria-hidden="true"></i>${formatPerM2(l.price_per_m2_uf)}</span>`
+        : '')
+    : (l.yield_band
+        ? `<span class="pill pill--yield"><i class="ti ti-percentage" aria-hidden="true"></i>${escapeHtml(l.yield_band)}</span>`
+        : '');
   const safeImg = l.image_url ? safeUrl(l.image_url) : '';
   const img = (safeImg && safeImg !== '#')
     ? `<img src="${escapeHtml(safeImg)}" alt="" loading="lazy" onerror="this.remove()">`

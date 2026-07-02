@@ -19,7 +19,7 @@ LISTING_FIELDS = [
     "id", "url", "title", "source", "region", "comuna", "class", "type",
     "status", "price_uf", "price_usd", "m2", "price_per_m2_uf", "water",
     "power", "access", "image_url", "yield_band", "opportunity",
-    "opportunity_basis", "price_drop_pct", "first_seen", "last_seen", "active",
+    "opportunity_basis", "opportunity_reason", "price_drop_pct", "first_seen", "last_seen", "active",
 ]
 
 

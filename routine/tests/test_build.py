@@ -59,3 +59,10 @@ def test_collect_raw_dedups_by_url_preferring_alert():
     combined = collect_raw(bp_listings=bp, alert_listings=al)
     assert len(combined) == 1
     assert combined[0]["source"] == "Yapo"
+
+
+def test_build_emits_opportunity_reason():
+    raw = [_raw("a", "Pucón", "turnkey", 8900, m2=140)]
+    result = build(raw, [], {}, FX, run_date="2026-07-01")
+    assert "opportunity_reason" in result["listings"][0]
+    assert result["listings"][0]["opportunity_reason"]  # non-empty

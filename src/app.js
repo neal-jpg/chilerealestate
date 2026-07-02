@@ -37,7 +37,7 @@ function savedViewHtml() {
   }
   return annotated.map((s) => {
     const live = listingById()[s.id];
-    if (live) {
+    if (s.status !== 'gone') {
       const note = s.status === 'changed'
         ? `<span class="saved-note">Now ${formatUf(s.current_uf)}</span>`
         : '';

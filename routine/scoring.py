@@ -10,30 +10,20 @@ import statistics
 from .config import SAMPLE_GATE, STRONG_RATIO, WATCH_RATIO, PRICE_DROP_TRIGGER
 
 
-def _active_ppm(listings, key_fn, key):
-    return [
-        l["price_per_m2_uf"] for l in listings
-        if l.get("active", True) and l.get("price_per_m2_uf") is not None and key_fn(l) == key
-    ]
+def _bucket(listings, key_fn):
+    """Group active, priced listings' UF/m² values by key_fn(listing)."""
+    buckets = {}
+    for l in listings:
+        if not l.get("active", True) or l.get("price_per_m2_uf") is None:
+            continue
+        buckets.setdefault(key_fn(l), []).append(l["price_per_m2_uf"])
+    return buckets
 
 
 def compute_medians(listings):
     """Median UF/m² per (comuna, class) bucket over active, priced listings."""
-    buckets = {}
-    for l in listings:
-        if not l.get("active", True) or l.get("price_per_m2_uf") is None:
-            continue
-        buckets.setdefault((l["comuna"], l["class"]), []).append(l["price_per_m2_uf"])
+    buckets = _bucket(listings, lambda l: (l["comuna"], l["class"]))
     return {k: statistics.median(v) for k, v in buckets.items()}
-
-
-def _region_medians(listings):
-    buckets = {}
-    for l in listings:
-        if not l.get("active", True) or l.get("price_per_m2_uf") is None:
-            continue
-        buckets.setdefault((l.get("region"), l["class"]), []).append(l["price_per_m2_uf"])
-    return buckets
 
 
 def _usable(l):
@@ -44,23 +34,22 @@ def _usable(l):
 
 def score_listings(listings):
     """Return listings (copies) with opportunity + opportunity_basis set."""
-    comuna_buckets = {}
-    for l in listings:
-        if l.get("active", True) and l.get("price_per_m2_uf") is not None:
-            comuna_buckets.setdefault((l["comuna"], l["class"]), []).append(l["price_per_m2_uf"])
-    region_buckets = _region_medians(listings)
+    comuna_buckets = _bucket(listings, lambda l: (l["comuna"], l["class"]))
+    region_buckets = _bucket(listings, lambda l: (l.get("region"), l["class"]))
+    comuna_medians = {k: statistics.median(v) for k, v in comuna_buckets.items()}
+    region_medians = {k: statistics.median(v) for k, v in region_buckets.items()}
 
     out = []
     for l in listings:
         c = dict(l)
         ppm = c.get("price_per_m2_uf")
-        comuna_vals = comuna_buckets.get((c["comuna"], c["class"]), [])
-        region_vals = region_buckets.get((c.get("region"), c["class"]), [])
+        ck = (c["comuna"], c["class"])
+        rk = (c.get("region"), c["class"])
 
-        if ppm is not None and len(comuna_vals) >= SAMPLE_GATE:
-            median, basis = statistics.median(comuna_vals), "comuna"
-        elif ppm is not None and len(region_vals) >= SAMPLE_GATE:
-            median, basis = statistics.median(region_vals), "region"
+        if ppm is not None and len(comuna_buckets.get(ck, [])) >= SAMPLE_GATE:
+            median, basis = comuna_medians[ck], "comuna"
+        elif ppm is not None and len(region_buckets.get(rk, [])) >= SAMPLE_GATE:
+            median, basis = region_medians[rk], "region"
         else:
             c["opportunity"], c["opportunity_basis"] = "Unrated", "none"
             out.append(c)

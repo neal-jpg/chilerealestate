@@ -52,3 +52,14 @@ def test_parcela_missing_utilities_is_watch():
     bad = _mk("b", "Frutillar", "parcela", 0.7, status="Project", water=False, power=False)
     scored = {l["id"]: l for l in score_listings(comps + [bad])}
     assert scored["b"]["opportunity"] == "Watch"
+
+
+def test_region_fallback_when_comuna_thin_but_region_has_comps():
+    # 5 turnkey comps across 5 distinct comunas: no single comuna bucket hits
+    # the gate, but the (region, class) bucket does, so scoring falls back to
+    # the region median and stamps basis="region".
+    comps = [_mk(f"c{i}", f"Town{i}", "turnkey", 100) for i in range(5)]
+    target = _mk("t", "Town0", "turnkey", 80)  # Town0 comuna bucket = 2 (<5)
+    scored = {l["id"]: l for l in score_listings(comps + [target])}
+    assert scored["t"]["opportunity_basis"] == "region"
+    assert scored["t"]["opportunity"] == "Strong"  # 0.8x of median, usable

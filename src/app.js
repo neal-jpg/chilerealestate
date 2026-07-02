@@ -3,7 +3,7 @@ import { listingsHtml, cardHtml } from './listings.js';
 import { priceHistoryHtml } from './pricehistory.js';
 import { newsListHtml, newsDetailHtml } from './news.js';
 import { loadSaved, storeSaved, toggleSaved, annotateSaved } from './saved.js';
-import { formatUf } from './format.js';
+import { formatUf, escapeHtml } from './format.js';
 
 const state = {
   region: 'All',
@@ -44,7 +44,7 @@ function savedViewHtml() {
       return cardHtml(live, saved).replace('</h3>', `</h3>${note}`);
     }
     return `<article class="card"><div class="card__body">
-      <h3 class="card__title">${s.title} <span class="saved-note saved-note--gone">No longer listed</span></h3>
+      <h3 class="card__title">${escapeHtml(s.title)} <span class="saved-note saved-note--gone">No longer listed</span></h3>
       <div class="price"><span class="price__uf">${formatUf(s.price_uf)}</span></div>
       <div class="src">Saved ${s.saved_at}</div>
     </div></article>`;

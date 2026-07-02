@@ -30,3 +30,12 @@ export function escapeHtml(s) {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
   }[c]));
 }
+
+export function safeUrl(url) {
+  try {
+    const parsed = new URL(url);
+    return (parsed.protocol === 'http:' || parsed.protocol === 'https:') ? url : '#';
+  } catch {
+    return '#';
+  }
+}

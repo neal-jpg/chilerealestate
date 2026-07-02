@@ -64,3 +64,9 @@ test('listingsHtml shows both the thin-coverage banner and the empty message whe
   assert.match(html, /thin/i);
   assert.match(html, /No listings/);
 });
+
+test('card omits the image tag for an unsafe image_url scheme', () => {
+  const evil = { ...turnkey, image_url: 'javascript:alert(1)' };
+  const html = cardHtml(evil, []);
+  assert.doesNotMatch(html, /<img/);
+});

@@ -1,15 +1,6 @@
-import { formatDate, escapeHtml } from './format.js';
+import { formatDate, escapeHtml, safeUrl } from './format.js';
 
 const CAT_CLASS = { Regulation: 'warning', Market: 'accent', Rates: 'accent', Infrastructure: 'neutral' };
-
-function safeUrl(url) {
-  try {
-    const parsed = new URL(url);
-    return (parsed.protocol === 'http:' || parsed.protocol === 'https:') ? url : '#';
-  } catch {
-    return '#';
-  }
-}
 
 function catTag(category) {
   const cls = CAT_CLASS[category] || 'neutral';

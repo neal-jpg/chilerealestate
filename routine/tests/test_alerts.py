@@ -77,3 +77,31 @@ def test_collect_alerts_processes_new_rows_and_advances_watermark():
     # nothing new -> no listings, watermark unchanged
     listings2, wm2 = collect_alerts(csv_text, new_wm, _fake_model)
     assert listings2 == [] and wm2 == new_wm
+
+
+def test_extract_from_email_drops_malformed_and_stamps_source():
+    def bad_model(prompt):
+        # one good, one missing url, one bad currency, one string price (coerced)
+        return ('[{"url":"u1","raw_price":8900,"currency":"UF","source":"WRONG"},'
+                '{"raw_price":5000,"currency":"UF"},'                       # no url -> drop
+                '{"url":"u3","raw_price":100,"currency":"BTC"},'            # bad currency -> drop
+                '{"url":"u4","raw_price":"185.000.000","currency":"CLP"}]')  # string price -> coerced
+    out = extract_from_email("body", "alertas@yapo.cl", bad_model)
+    assert len(out) == 2
+    assert {r["url"] for r in out} == {"u1", "u4"}
+    # source stamped from the sender (Yapo), NOT the model's "WRONG"
+    assert all(r["source"] == "Yapo" for r in out)
+    # string price coerced to int
+    u4 = next(r for r in out if r["url"] == "u4")
+    assert u4["raw_price"] == 185000000
+
+
+def test_extract_from_email_returns_full_contract_keys():
+    def model(prompt):
+        return '[{"url":"u1","raw_price":8900,"currency":"UF"}]'
+    out = extract_from_email("body", "alertas@portalinmobiliario.cl", model)
+    for k in ("url", "title", "source", "region", "comuna", "class", "type",
+              "status", "raw_price", "currency", "m2", "water", "power",
+              "access", "image_url"):
+        assert k in out[0]
+    assert out[0]["source"] == "Portal"  # sender is portal

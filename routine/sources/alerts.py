@@ -68,11 +68,50 @@ def parse_extraction_response(text):
     return data if isinstance(data, list) else []
 
 
+_VALID_CURRENCY = {"UF", "CLP", "USD"}
+
+
+def _coerce_number(v):
+    """Accept a number, or a digit-string (with dot/comma thousands), else None."""
+    if isinstance(v, bool):
+        return None
+    if isinstance(v, (int, float)):
+        return v
+    if isinstance(v, str):
+        digits = re.sub(r"[^0-9]", "", v)
+        return int(digits) if digits else None
+    return None
+
+
+def _clean_listing(d, source):
+    """Validate/coerce one model-produced listing into the raw-listing contract,
+    or None to drop it. Requires a url, a numeric raw_price, and a known currency.
+    `source` is stamped from the trusted sender, overriding whatever the model said."""
+    if not isinstance(d, dict):
+        return None
+    url = d.get("url")
+    price = _coerce_number(d.get("raw_price"))
+    currency = d.get("currency")
+    if not url or price is None or currency not in _VALID_CURRENCY:
+        return None
+    out = {k: d.get(k) for k in RAW_FIELDS}
+    out["url"] = url
+    out["raw_price"] = price
+    out["source"] = source
+    return out
+
+
 def extract_from_email(email_body, sender, model_call):
-    """Build the prompt, call the injected model, parse listings out of the reply."""
+    """Build the prompt, call the injected model, parse + validate listings."""
     prompt = build_extraction_prompt(email_body, sender)
     reply = model_call(prompt)
-    return parse_extraction_response(reply)
+    source = "Yapo" if "yapo" in (sender or "").lower() else "Portal"
+    cleaned = []
+    for d in parse_extraction_response(reply):
+        c = _clean_listing(d, source)
+        if c is not None:
+            cleaned.append(c)
+    return cleaned
 
 
 def collect_alerts(csv_text, watermark, model_call):

@@ -87,3 +87,29 @@ def test_extract_warmup_from_html_script_tag():
     html = '<html><body><script id="wix-warmup-data" type="application/json">{"a":1}</script></body></html>'
     assert extract_warmup(html) == {"a": 1}
     assert extract_warmup("<html>no warmup</html>") is None
+
+
+def test_parsers_survive_non_string_field_values():
+    from routine.sources.buenasparcelas import (
+        parse_price_clp, parse_area_m2, wix_image_url, parse_status,
+    )
+    assert parse_price_clp(20900000) == 20900000   # numeric price coerces fine
+    assert parse_area_m2(5000) is None             # numeric w/o "m" unit -> None, no crash
+    assert wix_image_url(123) == ""                # numeric image -> ''
+    assert parse_status(5) == "Project"            # numeric status -> default, no crash
+
+
+def test_listings_from_warmup_skips_a_bad_record_without_crashing():
+    from routine.sources.buenasparcelas import listings_from_warmup
+    from routine import config
+    warmup = {"appsWarmupData": {"dataBinding": {"dataStore": {"recordsByCollectionId": {
+        "LoteosParcelaciones": {
+            "good": {"url": "https://www.buenasparcelas.cl/g", "ciudad": "Pucon",
+                     "valor": "$10.000.000", "area": "✓ 5.000 m²"},
+            "bad": {"url": "https://www.buenasparcelas.cl/b", "ciudad": "Pucon",
+                    "valor": {"weird": "object"}},
+        }
+    }}}}}
+    listings = listings_from_warmup(warmup, config.TOWN_REGION)
+    assert len(listings) == 1                        # bad record dropped, good one kept
+    assert listings[0]["url"].endswith("/g")

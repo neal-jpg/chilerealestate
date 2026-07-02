@@ -4,28 +4,32 @@
 Pure parsers here; the warmup extraction, record mapping, and network fetch are
 in the second half (Task 4). Field formats captured from the live site."""
 
+import json
 import re
+import urllib.request
+
+from ..config import BUENASPARCELAS_URL
 
 _FEATURE_FIELDS = ("agua", "luz", "crditoDirecto", "hipotecario")
 
 
 def wix_image_url(uri):
     """wix:image://v1/<mediaId>/... -> static.wixstatic.com hotlink, or ''."""
-    m = re.match(r"wix:image://v1/([^/]+)/", uri or "")
+    m = re.match(r"wix:image://v1/([^/]+)/", "" if uri is None else str(uri))
     return f"https://static.wixstatic.com/media/{m.group(1)}" if m else ""
 
 
 def parse_price_clp(s):
-    """'$18.000.000' -> 18000000 (int CLP)."""
-    digits = re.sub(r"[^0-9]", "", s or "")
+    """'$18.000.000' -> 18000000 (int CLP). Coerces non-str input, never crashes."""
+    digits = re.sub(r"[^0-9]", "", "" if s is None else str(s))
     return int(digits) if digits else None
 
 
 def parse_area_m2(s):
     """'✓ 5.000 m²' -> 5000, or None when no m² number is present."""
-    if not s:
+    if s is None:
         return None
-    m = re.search(r"([0-9][0-9.]*)\s*m", s)
+    m = re.search(r"([0-9][0-9.]*)\s*m", str(s))
     if not m:
         return None
     return int(m.group(1).replace(".", ""))
@@ -40,13 +44,8 @@ def feature_flags(record):
 
 def parse_status(ventatipo):
     """'☺Terminado' -> 'Built'; '►En Proceso' (or anything else) -> 'Project'."""
-    return "Built" if "Terminado" in (ventatipo or "") else "Project"
+    return "Built" if "Terminado" in str(ventatipo or "") else "Project"
 
-
-import json as _json
-import urllib.request
-
-from ..config import BUENASPARCELAS_URL
 
 _WARMUP_RE = re.compile(
     r'<script[^>]*id="wix-warmup-data"[^>]*>(.*?)</script>', re.S)
@@ -61,7 +60,7 @@ def extract_warmup(html):
     if not m:
         return None
     try:
-        return _json.loads(m.group(1).strip())
+        return json.loads(m.group(1).strip())
     except ValueError:
         return None
 
@@ -105,7 +104,10 @@ def listings_from_warmup(warmup, town_region):
         return []
     out = []
     for rec in records.values():
-        raw = record_to_raw(rec, town_region)
+        try:
+            raw = record_to_raw(rec, town_region)
+        except Exception:
+            continue  # one malformed record must never take down the whole batch
         if raw is not None:
             out.append(raw)
     return out

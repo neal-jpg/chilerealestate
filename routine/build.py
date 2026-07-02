@@ -15,6 +15,7 @@ from .merge import merge_listings
 from .fx import fetch_fx
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
+REPO_DIR = os.path.dirname(DATA_DIR)
 LISTING_FIELDS = [
     "id", "url", "title", "source", "region", "comuna", "class", "type",
     "status", "price_uf", "price_usd", "m2", "price_per_m2_uf", "water",
@@ -79,43 +80,69 @@ def _save(name, value):
         json.dump(value, f, ensure_ascii=False, indent=2)
 
 
-def main(run_date, alert_csv_url=None, model_call=None):
-    """Wire real IO: fetch fx, scrape BuenasParcelas, extract alerts (if wired),
-    run build, write the four listing-side files + advance the alert watermark.
+def main(run_date, alert_csv_url=None, model_call=None, publish=False):
+    """Daily run: fetch FX (fallback to cached), scrape + extract sources (each
+    isolated), build, and — unless it would blank the site — write the four data
+    files + advance the alert watermark. With publish=True, commit/push and
+    confirm the GitHub Pages deploy.
 
-    alert_csv_url / model_call are None until the Make->Sheet pipeline and the
-    cloud routine's Claude are wired (Plan 4); alerts are simply skipped until then.
+    alert_csv_url / model_call stay None until the Make->Sheet pipeline and the
+    cloud routine's Claude are wired; alerts are skipped until then.
     """
+    import time
     from .sources import buenasparcelas, alerts
     from . import state as state_mod
+    from . import publish as publish_mod
+    from .resilience import resolve_fx, safe_collect, should_write
 
     state_path = os.path.join(DATA_DIR, "state.json")
     st = state_mod.load_state(state_path)
 
-    fx = fetch_fx()
-    bp_listings = buenasparcelas.collect(config.TOWN_REGION)
+    fx = resolve_fx(fetch_fx, _load("fx.json", None))
+    bp_listings = safe_collect(lambda: buenasparcelas.collect(config.TOWN_REGION))
 
     alert_listings = []
     if alert_csv_url and model_call:
-        import urllib.request
-        with urllib.request.urlopen(alert_csv_url, timeout=40) as resp:
-            csv_text = resp.read().decode("utf-8", errors="replace")
-        alert_listings, st["alert_watermark"] = alerts.collect_alerts(
-            csv_text, st["alert_watermark"], model_call)
+        try:
+            csv_text = publish_mod.fetch_text(alert_csv_url)
+            alert_listings, st["alert_watermark"] = alerts.collect_alerts(
+                csv_text, st["alert_watermark"], model_call)
+        except Exception:
+            alert_listings = []
 
     raw_listings = collect_raw(bp_listings, alert_listings)
     existing_listings = _load("listings.json", [])
     existing_snapshots = _load("snapshots.json", {})
 
     result = build(raw_listings, existing_listings, existing_snapshots, fx, run_date)
+
+    if not should_write(result["listings"], existing_listings):
+        print("WARNING: run would blank the site (0 active listings); keeping prior data")
+        return {"skipped": True, "listings": result["listings"]}
+
     _save("listings.json", result["listings"])
     _save("snapshots.json", result["snapshots"])
     _save("fx.json", result["fx"])
     _save("meta.json", result["meta"])
     state_mod.save_state(state_path, st)
+
+    if publish:
+        committed = publish_mod.publish(REPO_DIR, f"data: daily refresh {run_date}")
+        if committed:
+            url = config.PAGES_URL.rstrip("/") + "/data/meta.json"
+            ok = publish_mod.verify_deploy(
+                run_date,
+                check_fn=lambda: publish_mod.build_date_from_meta(publish_mod.fetch_text(url)),
+                retrigger_fn=lambda: publish_mod.retrigger(REPO_DIR),
+                attempts=config.DEPLOY_ATTEMPTS,
+                wait_fn=lambda: time.sleep(90),
+            )
+            if not ok:
+                print("WARNING: Pages deploy did not confirm after retries")
+
     return result
 
 
 if __name__ == "__main__":
     from datetime import date
-    main(run_date=date.today().isoformat())
+    main(run_date=date.today().isoformat(), publish=True)

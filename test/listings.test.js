@@ -82,3 +82,19 @@ test('parcela card with unknown size omits the price/m2 pill', () => {
   assert.doesNotMatch(html, /pill--ppm/);
   assert.doesNotMatch(html, /UF\/m²/);
 });
+
+test('opportunity tag is a tappable why button with a why slot', () => {
+  const html = cardHtml(turnkey, []);
+  assert.match(html, /data-action="why"/);
+  assert.match(html, /class="card__why"/);
+});
+
+test('card links the source label to the original listing url', () => {
+  const html = cardHtml({ ...turnkey, url: 'https://yapo.cl/x', source: 'Yapo' }, []);
+  assert.match(html, /<a class="src"[^>]*href="https:\/\/yapo\.cl\/x"[^>]*>via Yapo/);
+});
+
+test('card omits the m2 pill when size is unknown', () => {
+  const html = cardHtml({ ...turnkey, m2: null }, []);
+  assert.doesNotMatch(html, /m²/);
+});

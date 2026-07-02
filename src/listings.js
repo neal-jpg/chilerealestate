@@ -11,7 +11,7 @@ function pill(icon, text) {
 export function cardHtml(l, saved) {
   const isLand = l.class === 'parcela';
   const oppLabel = isLand ? `${l.opportunity} · land` : l.opportunity;
-  const oppTag = `<span class="tag tag--${OPP_CLASS[l.opportunity]}"><i class="ti ${OPP_ICON[l.opportunity]}" aria-hidden="true"></i>${escapeHtml(oppLabel)}</span>`;
+  const oppTag = `<button class="tag tag--${OPP_CLASS[l.opportunity]}" data-action="why" data-id="${escapeHtml(l.id)}" aria-label="Why ${escapeHtml(oppLabel)}?"><i class="ti ${OPP_ICON[l.opportunity]}" aria-hidden="true"></i>${escapeHtml(oppLabel)}</button>`;
   const dropTag = l.price_drop_pct
     ? `<span class="tag tag--drop"><i class="ti ti-trending-down" aria-hidden="true"></i>${l.price_drop_pct}%</span>`
     : '';
@@ -30,6 +30,7 @@ export function cardHtml(l, saved) {
     : '';
   const bookmark = isSaved(saved, l.id) ? 'bookmark bookmark--on' : 'bookmark';
   const bookmarkLabel = isSaved(saved, l.id) ? 'Saved' : 'Save';
+  const m2Pill = l.m2 != null ? pill('', `${l.m2.toLocaleString('es-CL')} m²`) : '';
 
   return `<article class="card" data-id="${escapeHtml(l.id)}">
   <div class="card__img">
@@ -42,17 +43,18 @@ export function cardHtml(l, saved) {
       <div class="tags">${oppTag}${dropTag}</div>
       <button class="${bookmark}" data-action="save" data-id="${escapeHtml(l.id)}" aria-label="${bookmarkLabel}"><i class="ti ti-bookmark" aria-hidden="true"></i></button>
     </div>
+    <div class="card__why" data-why-for="${escapeHtml(l.id)}"></div>
     <h3 class="card__title">${escapeHtml(l.title)}</h3>
     <div class="price"><span class="price__uf">${formatUf(l.price_uf)}</span><span class="price__usd">${formatUsd(l.price_usd)}</span></div>
     <div class="pills">
       ${pill('', l.status)}
-      ${pill('', `${l.m2.toLocaleString('es-CL')} m²`)}
+      ${m2Pill}
       ${l.water ? pill('ti-droplet', 'Water') : ''}
       ${l.power ? pill('ti-bolt', 'Power') : ''}
       ${classPill}
     </div>
     <div class="card__foot">
-      <span class="src">via ${escapeHtml(l.source)}</span>
+      <a class="src" href="${escapeHtml(safeUrl(l.url))}" target="_blank" rel="noopener noreferrer">via ${escapeHtml(l.source)} <i class="ti ti-external-link" aria-hidden="true"></i></a>
       <button class="toggle" data-action="history" data-id="${escapeHtml(l.id)}">Price history <i class="ti ti-chevron-right" aria-hidden="true"></i></button>
     </div>
     <div class="card__history" data-history-for="${escapeHtml(l.id)}"></div>

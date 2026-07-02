@@ -1,0 +1,52 @@
+import os
+from routine.sources.alerts import (
+    read_alert_csv, new_rows, build_extraction_prompt, parse_extraction_response,
+)
+
+FIX = os.path.join(os.path.dirname(os.path.dirname(__file__)), "fixtures", "alert_sample.txt")
+
+
+def test_read_alert_csv_parses_rows():
+    csv_text = (
+        "received_at,sender,subject,body\r\n"
+        "2026-07-01T09:00:00,alertas@yapo.cl,Nuevas,Casa en Pucón UF 8900\r\n"
+        "2026-07-02T09:00:00,alertas@portalinmobiliario.cl,Match,Depto en Valdivia\r\n"
+    )
+    rows = read_alert_csv(csv_text)
+    assert len(rows) == 2
+    assert rows[0]["sender"] == "alertas@yapo.cl"
+    assert rows[1]["body"] == "Depto en Valdivia"
+
+
+def test_new_rows_filters_by_watermark():
+    rows = [
+        {"received_at": "2026-07-01T09:00:00", "body": "a"},
+        {"received_at": "2026-07-02T09:00:00", "body": "b"},
+    ]
+    assert [r["body"] for r in new_rows(rows, "2026-07-01T09:00:00")] == ["b"]
+    assert len(new_rows(rows, "")) == 2  # empty watermark -> all rows new
+
+
+def test_build_extraction_prompt_includes_body_and_shape():
+    body = open(FIX, encoding="utf-8").read()
+    prompt = build_extraction_prompt(body, "alertas@yapo.cl")
+    assert "Yapo" in prompt or "yapo" in prompt
+    assert "JSON" in prompt
+    assert "raw_price" in prompt and "currency" in prompt  # asks for the contract
+    assert "Pucón" in prompt  # the email body is embedded
+
+
+def test_parse_extraction_response_reads_json_array():
+    text = '[{"url":"u1","raw_price":8900,"currency":"UF","comuna":"Pucón"}]'
+    out = parse_extraction_response(text)
+    assert out == [{"url": "u1", "raw_price": 8900, "currency": "UF", "comuna": "Pucón"}]
+
+
+def test_parse_extraction_response_tolerates_code_fences_and_prose():
+    text = 'Here you go:\n```json\n[{"url":"u1"}]\n```\nDone.'
+    assert parse_extraction_response(text) == [{"url": "u1"}]
+
+
+def test_parse_extraction_response_bad_input_returns_empty():
+    assert parse_extraction_response("no json here") == []
+    assert parse_extraction_response('{"not":"an array"}') == []

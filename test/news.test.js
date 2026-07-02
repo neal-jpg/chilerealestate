@@ -38,3 +38,16 @@ test('newsDetailHtml includes the library callout and the per-article slice', ()
 test('newsDetailHtml links to the original', () => {
   assert.match(newsDetailHtml(article, contextByKey), /href="https:\/\/x\.test\/a"/);
 });
+
+test('newsDetailHtml neutralizes a non-http(s) URL scheme', () => {
+  const evil = { ...article, url: 'javascript:alert(1)' };
+  const html = newsDetailHtml(evil, contextByKey);
+  assert.doesNotMatch(html, /href="javascript:/);
+  assert.match(html, /href="#"/);
+});
+
+test('newsDetailHtml preserves a valid https URL and adds noreferrer', () => {
+  const html = newsDetailHtml(article, contextByKey);
+  assert.match(html, /href="https:\/\/x\.test\/a"/);
+  assert.match(html, /rel="noopener noreferrer"/);
+});

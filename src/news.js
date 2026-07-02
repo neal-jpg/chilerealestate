@@ -2,6 +2,15 @@ import { formatDate, escapeHtml } from './format.js';
 
 const CAT_CLASS = { Regulation: 'warning', Market: 'accent', Rates: 'accent', Infrastructure: 'neutral' };
 
+function safeUrl(url) {
+  try {
+    const parsed = new URL(url);
+    return (parsed.protocol === 'http:' || parsed.protocol === 'https:') ? url : '#';
+  } catch {
+    return '#';
+  }
+}
+
 function catTag(category) {
   const cls = CAT_CLASS[category] || 'neutral';
   return `<span class="cat cat--${cls}">${escapeHtml(category)}</span>`;
@@ -48,6 +57,6 @@ export function newsDetailHtml(article, contextByKey) {
   <div class="detail__meta">${escapeHtml(article.source)} · ${formatDate(article.date)}</div>
   <div class="summary">${summary}</div>
   ${context}
-  <a class="readorig" href="${escapeHtml(article.url)}" target="_blank" rel="noopener">Read the original <i class="ti ti-external-link" aria-hidden="true"></i></a>
+  <a class="readorig" href="${escapeHtml(safeUrl(article.url))}" target="_blank" rel="noopener noreferrer">Read the original <i class="ti ti-external-link" aria-hidden="true"></i></a>
 </div>`;
 }

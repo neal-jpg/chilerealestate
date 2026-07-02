@@ -1,42 +1,218 @@
 {
-  "https://www.yapo.cl/x/123": [
-    {
-      "date": "2026-05-20",
-      "price_uf": 9500
-    },
-    {
-      "date": "2026-06-01",
-      "price_uf": 9500
-    },
-    {
-      "date": "2026-06-12",
-      "price_uf": 9200
-    },
-    {
-      "date": "2026-06-22",
-      "price_uf": 8900
-    },
-    {
-      "date": "2026-07-01",
-      "price_uf": 8900
-    }
-  ],
-  "https://buenasparcelas.cl/p/55": [
+  "https://www.buenasparcelas.cl/rioexpedicion": [
     {
       "date": "2026-07-02",
-      "price_uf": 2400
+      "price_uf": 460
     }
   ],
-  "https://southernchileproperties.com/l/9": [
+  "https://www.buenasparcelas.cl/robles-de-rio-negro": [
     {
       "date": "2026-07-02",
-      "price_uf": 6171
+      "price_uf": 535
     }
   ],
-  "https://buenasparcelas.cl/p/77": [
+  "https://www.buenasparcelas.cl/loteopulelfu": [
     {
       "date": "2026-07-02",
-      "price_uf": 1800
+      "price_uf": 562
+    }
+  ],
+  "https://www.buenasparcelas.cl/praderasdelpedernal": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 586
+    }
+  ],
+  "https://www.buenasparcelas.cl/miradorvolcanes": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 611
+    }
+  ],
+  "https://www.buenasparcelas.cl/fundomaniovillarrica": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 614
+    }
+  ],
+  "https://www.buenasparcelas.cl/haciendaloscerezos": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 639
+    }
+  ],
+  "https://www.buenasparcelas.cl/fundo-santa-nelly": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 688
+    }
+  ],
+  "https://www.buenasparcelas.cl/loncotoro": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 716
+    }
+  ],
+  "https://www.buenasparcelas.cl/fundomirador": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 716
+    }
+  ],
+  "https://www.buenasparcelas.cl/brisasdebaquedano": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 734
+    }
+  ],
+  "https://www.buenasparcelas.cl/paisajesderupanco2": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 737
+    }
+  ],
+  "https://www.buenasparcelas.cl/trafun": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 841
+    }
+  ],
+  "https://www.buenasparcelas.cl/refugiopumalal": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 895
+    }
+  ],
+  "https://www.buenasparcelas.cl/praderasdelranco": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 934
+    }
+  ],
+  "https://www.buenasparcelas.cl/reserva-octay": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 969
+    }
+  ],
+  "https://www.buenasparcelas.cl/riomoro": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 972
+    }
+  ],
+  "https://www.buenasparcelas.cl/coihueco-riverside": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 985
+    }
+  ],
+  "https://www.buenasparcelas.cl/brisasdelranco": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 995
+    }
+  ],
+  "https://www.buenasparcelas.cl/fundopuyehue": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1023
+    }
+  ],
+  "http://www.buenasparcelas.cl/brisas-del-rahue": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1054
+    }
+  ],
+  "https://www.buenasparcelas.cl/loncotoro2": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1074
+    }
+  ],
+  "https://www.buenasparcelas.cl/refugiolasloicas": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1074
+    }
+  ],
+  "https://www.buenasparcelas.cl/hacienda-manio": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1148
+    }
+  ],
+  "https://www.buenasparcelas.cl/parquelosrobles": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1184
+    }
+  ],
+  "https://www.buenasparcelas.cl/brisasdepucon": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1202
+    }
+  ],
+  "https://www.buenasparcelas.cl/koiwe": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1225
+    }
+  ],
+  "https://www.buenasparcelas.cl/fundoelmonje": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1276
+    }
+  ],
+  "https://www.buenasparcelas.cl/roblesdepilauco": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1279
+    }
+  ],
+  "https://www.buenasparcelas.cl/riberacallecalle": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1432
+    }
+  ],
+  "https://www.buenasparcelas.cl/mirador-del-encanto": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1432
+    }
+  ],
+  "https://www.buenasparcelas.cl/los-molinos-de-puerto-octay": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1534
+    }
+  ],
+  "https://www.buenasparcelas.cl/reservaquilaco": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 1867
+    }
+  ],
+  "https://www.buenasparcelas.cl/vista-octay": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 2046
+    }
+  ],
+  "https://www.buenasparcelas.cl/fundolapunta": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 2558
+    }
+  ],
+  "https://www.buenasparcelas.cl/vivepuertovaras": [
+    {
+      "date": "2026-07-02",
+      "price_uf": 2558
     }
   ]
 }

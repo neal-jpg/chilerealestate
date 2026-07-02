@@ -17,9 +17,5 @@
       "order": 3
     }
   ],
-  "thin_coverage": [
-    "IX",
-    "XIV",
-    "X"
-  ]
+  "thin_coverage": []
 }

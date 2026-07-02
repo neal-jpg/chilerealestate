@@ -63,3 +63,23 @@ def test_region_fallback_when_comuna_thin_but_region_has_comps():
     scored = {l["id"]: l for l in score_listings(comps + [target])}
     assert scored["t"]["opportunity_basis"] == "region"
     assert scored["t"]["opportunity"] == "Strong"  # 0.8x of median, usable
+
+
+def test_opportunity_reason_is_set_and_accurate():
+    comps = [_mk(f"c{i}", "Pucón", "parcela", 1.0, water=True, power=True) for i in range(5)]
+    cheap = _mk("cheap", "Pucón", "parcela", 0.8, water=True, power=True)   # 20% below -> Strong
+    dear = _mk("dear", "Pucón", "parcela", 1.3, water=True, power=True)      # 30% above -> Watch
+    noserv = _mk("noserv", "Pucón", "parcela", 0.9, water=False, power=False)  # unusable -> Watch
+    dropped = _mk("dropped", "Pucón", "parcela", 1.3, water=True, power=True, drop=6)
+    by = {l["id"]: l for l in score_listings(comps + [cheap, dear, noserv, dropped])}
+    assert "20% below" in by["cheap"]["opportunity_reason"]
+    assert "water and power" in by["cheap"]["opportunity_reason"]
+    assert "30% above" in by["dear"]["opportunity_reason"]
+    assert "Missing water or power" in by["noserv"]["opportunity_reason"]
+    assert "dropped 6%" in by["dropped"]["opportunity_reason"]
+    assert "in line with" in by[[c["id"] for c in comps][0]]["opportunity_reason"]
+
+
+def test_unrated_reason_explains_thin_data():
+    scored = score_listings([_mk("a", "Pucón", "turnkey", 60)])
+    assert "Not enough comparable" in scored[0]["opportunity_reason"]

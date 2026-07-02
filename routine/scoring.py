@@ -33,7 +33,9 @@ def _usable(l):
 
 
 def score_listings(listings):
-    """Return listings (copies) with opportunity + opportunity_basis set."""
+    """Return listings (copies) with opportunity, opportunity_basis, and a
+    one-sentence opportunity_reason set (the reason is derived from the same
+    ratio/median facts, so it always matches the tag)."""
     comuna_buckets = _bucket(listings, lambda l: (l["comuna"], l["class"]))
     region_buckets = _bucket(listings, lambda l: (l.get("region"), l["class"]))
     comuna_medians = {k: statistics.median(v) for k, v in comuna_buckets.items()}
@@ -45,25 +47,52 @@ def score_listings(listings):
         ppm = c.get("price_per_m2_uf")
         ck = (c["comuna"], c["class"])
         rk = (c.get("region"), c["class"])
+        noun = "parcela" if c["class"] == "parcela" else "home"
 
         if ppm is not None and len(comuna_buckets.get(ck, [])) >= SAMPLE_GATE:
             median, basis = comuna_medians[ck], "comuna"
         elif ppm is not None and len(region_buckets.get(rk, [])) >= SAMPLE_GATE:
             median, basis = region_medians[rk], "region"
         else:
-            c["opportunity"], c["opportunity_basis"] = "Unrated", "none"
+            c["opportunity"] = "Unrated"
+            c["opportunity_basis"] = "none"
+            c["opportunity_reason"] = (
+                f"Not enough comparable {noun}s in this area yet to price it fairly."
+            )
             out.append(c)
             continue
 
+        place = c["comuna"] if basis == "comuna" else "the area"
         ratio = ppm / median
-        if c.get("price_drop_pct") and c["price_drop_pct"] >= PRICE_DROP_TRIGGER:
+        drop = c.get("price_drop_pct")
+        if drop and drop >= PRICE_DROP_TRIGGER:
             opp = "Strong"
+            reason = f"The price dropped {drop}% since it was first listed."
         elif ratio > WATCH_RATIO or not _usable(c):
             opp = "Watch"
+            if not _usable(c):
+                reason = ("Missing water or power, which you'd need before building."
+                          if c["class"] == "parcela"
+                          else "Still a project, not move-in ready yet.")
+            else:
+                reason = (f"Priced about {round((ratio - 1) * 100)}% above the typical "
+                          f"{noun} in {place} by price/m².")
         elif ratio <= STRONG_RATIO:
             opp = "Strong"
+            if c["class"] == "parcela" and c.get("water") and c.get("power"):
+                extra = ", and it has water and power"
+            elif c["class"] != "parcela" and c.get("status") == "Built":
+                extra = ", and it's move-in ready"
+            else:
+                extra = ""
+            reason = (f"Priced about {round((1 - ratio) * 100)}% below the typical "
+                      f"{noun} in {place} by price/m²{extra}.")
         else:
             opp = "Fair"
-        c["opportunity"], c["opportunity_basis"] = opp, basis
+            reason = f"Priced in line with other {noun}s in {place}."
+
+        c["opportunity"] = opp
+        c["opportunity_basis"] = basis
+        c["opportunity_reason"] = reason
         out.append(c)
     return out

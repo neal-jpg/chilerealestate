@@ -70,12 +70,12 @@ export function listingsHtml(listings, saved, activeRegion, thin) {
   const filtered = activeRegion === 'All'
     ? listings
     : listings.filter((l) => l.region === activeRegion);
-  if (filtered.length === 0) {
-    return `<p class="empty">No listings in this region yet.</p>`;
-  }
   const banner = thin
     ? `<div class="banner"><i class="ti ti-info-circle" aria-hidden="true"></i>Thin coverage here — leaning on alerts and news.</div>`
     : '';
+  if (filtered.length === 0) {
+    return `${banner}<p class="empty">No listings in this region yet.</p>`;
+  }
   const groups = groupByComuna(filtered).map((g) => `
   <section class="town">
     <h2 class="town__head">${escapeHtml(g.comuna)} <span class="town__count">· ${g.items.length} listing${g.items.length === 1 ? '' : 's'}</span></h2>

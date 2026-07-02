@@ -58,3 +58,9 @@ test('listingsHtml filters by region and shows an empty message when none', () =
 test('listingsHtml shows a thin-coverage banner when flagged', () => {
   assert.match(listingsHtml([turnkey], [], 'IX', true), /thin/i);
 });
+
+test('listingsHtml shows both the thin-coverage banner and the empty message when a thin region has no listings', () => {
+  const html = listingsHtml([], [], 'X', true);
+  assert.match(html, /thin/i);
+  assert.match(html, /No listings/);
+});

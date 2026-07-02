@@ -65,3 +65,21 @@ def test_scraped_listing_expires_after_ttl_alert_listing_lingers():
     by_id = {l["id"]: l for l in listings}
     assert by_id["s"]["active"] is False   # scraped, >10d
     assert by_id["a"]["active"] is True    # alert, <60d
+
+
+def test_price_drop_rounds_half_up_to_match_the_app():
+    # 520 -> 507 is exactly a 2.5% drop; the app's JS Math.round gives 3, and
+    # the routine must match so the card pill and the graph never disagree.
+    snaps = [{"date": "a", "price_uf": 520}, {"date": "b", "price_uf": 507}]
+    assert price_drop_from_snapshots(snaps) == 3
+
+
+def test_price_rise_appends_snapshot_but_no_drop():
+    existing = [{"id": "a", "url": "a", "source": "Yapo", "price_uf": 9500,
+                 "first_seen": "2026-05-20", "last_seen": "2026-05-20", "active": True, "region": "IX"}]
+    snaps0 = {"a": [{"date": "2026-05-20", "price_uf": 9500}]}
+    listings, snaps = merge_listings(existing, snaps0,
+        incoming=[{"id": "a", "url": "a", "source": "Yapo", "price_uf": 10000, "region": "IX"}],
+        run_date="2026-07-01")
+    assert len(snaps["a"]) == 2          # a rise still appends to the series
+    assert listings[0]["price_drop_pct"] is None  # ...but shows no drop pill

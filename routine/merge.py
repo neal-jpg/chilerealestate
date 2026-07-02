@@ -12,14 +12,17 @@ def price_drop_from_snapshots(snaps):
     """Percent drop from the first snapshot to the current one, or None.
 
     Single source of truth for the drop: the app's price-history graph reads the
-    same first-vs-last from snapshots, so the card pill and the graph agree.
+    same first-vs-last from snapshots, so the card pill and the graph agree. We
+    round half-UP with int(x + 0.5) to match the app's JS Math.round exactly
+    (Python's built-in round() does banker's rounding and would diverge on a .5%
+    boundary, e.g. a 2.5% drop).
     """
     if not snaps or len(snaps) < 2:
         return None
     first, last = snaps[0]["price_uf"], snaps[-1]["price_uf"]
     if last >= first:
         return None
-    pct = round((first - last) / first * 100)
+    pct = int((first - last) / first * 100 + 0.5)
     return pct if pct >= 1 else None
 
 

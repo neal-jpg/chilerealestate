@@ -1,0 +1,49 @@
+[
+  {
+    "id": "puerto-varas-str-regulation",
+    "title": "Puerto Varas evalúa regular arriendos cortos tipo Airbnb",
+    "region": "X",
+    "category": "Regulation",
+    "summary": [
+      "Puerto Varas is drafting rules for short-term rentals, pushed by housing pressure and neighbor complaints near the center. The draft floats a registration requirement and a yearly cap on rented nights in some residential zones.",
+      "None of it is law yet, and a vote isn't likely before spring. If it lands, it hits whole-home Airbnb operators hardest, the exact model driving the yields these lake towns are known for."
+    ],
+    "context_slice": [
+      "Hits whole-home operators most; long-term rentals are untouched.",
+      "Puerto Varas is your anchor town in X Los Lagos.",
+      "Nothing changes today; track it for the spring vote."
+    ],
+    "library_refs": ["how-yield-works"],
+    "source": "La Tercera",
+    "url": "https://www.latercera.com/x",
+    "date": "2026-06-28"
+  },
+  {
+    "id": "frutillar-price-rises",
+    "title": "Frutillar lidera las alzas de precio en la zona lacustre",
+    "region": "X",
+    "category": "Market",
+    "summary": [
+      "Asking prices in Frutillar rose faster than the rest of the lake district last quarter, led by lakefront homes."
+    ],
+    "context_slice": ["Watch price/m² creeping above the town median."],
+    "library_refs": ["whats-a-uf"],
+    "source": "Diario Financiero",
+    "url": "https://www.df.cl/x",
+    "date": "2026-06-26"
+  },
+  {
+    "id": "national-mortgage-rates",
+    "title": "Tasas hipotecarias bajan por primera vez en 2026",
+    "region": "national",
+    "category": "Rates",
+    "summary": [
+      "Mortgage rates edged down nationally for the first time this year, a small tailwind for buyers."
+    ],
+    "context_slice": ["Cheaper financing tends to firm up asking prices."],
+    "library_refs": ["rate-backdrop"],
+    "source": "Emol",
+    "url": "https://www.emol.com/x",
+    "date": "2026-06-24"
+  }
+]

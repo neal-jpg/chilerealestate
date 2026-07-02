@@ -1,0 +1,6 @@
+[
+  { "key": "whats-a-uf", "title": "What's a UF", "body": "The UF is Chile's inflation-indexed unit of account. Property is priced in UF; the peso value updates daily.", "tone": "info", "source_url": "https://www.mindicador.cl", "last_verified": "2026-07-01" },
+  { "key": "foreign-buyer", "title": "Foreign-buyer rights + border-zone rule", "body": "Foreigners can own property in Chile with few restrictions, except border and coastal-security zones that need extra authorization.", "tone": "warn", "source_url": "https://example.com/foreign", "last_verified": "2026-07-01" },
+  { "key": "how-yield-works", "title": "How yield works", "body": "Short-stay income is seasonal and swings with occupancy. A cap on nights trims the high end of a town's yield range.", "tone": "info", "source_url": "https://example.com/yield", "last_verified": "2026-07-01" },
+  { "key": "rate-backdrop", "title": "The rate backdrop", "body": "Cheaper financing lifts buyer demand. Watch mortgage rates alongside supply and regulation.", "tone": "neutral", "source_url": "https://example.com/rates", "last_verified": "2026-07-01" }
+]

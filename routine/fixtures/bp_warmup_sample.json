@@ -1,0 +1,48 @@
+{
+  "appsWarmupData": {
+    "dataBinding": {
+      "dataStore": {
+        "recordsByCollectionId": {
+          "LoteosParcelaciones": {
+            "rec1": {
+              "title": "Río Expedición",
+              "url": "https://www.buenasparcelas.cl/rioexpedicion",
+              "valor": "$18.000.000",
+              "ciudad": "Tegualda",
+              "area": "✓ 5.000 m²",
+              "VentaTipo": "☺Terminado",
+              "tipo": "Arboleda",
+              "imagen": "wix:image://v1/cdc54a_3ed95003d2da44d28168d7e82ff392d8~mv2.jpg/x.jpg#originWidth=1292&originHeight=969",
+              "agua": "✓ Luz",
+              "crditoDirecto": "✓ Hipotecario",
+              "hipotecario": "✓ Agua"
+            },
+            "rec2": {
+              "title": "Robles de Río Negro",
+              "url": "https://www.buenasparcelas.cl/robles-de-rio-negro",
+              "valor": "$20.900.000",
+              "ciudad": "Pucon",
+              "area": "✓ 5.000 m²",
+              "VentaTipo": "►En Proceso",
+              "tipo": "Arboleda",
+              "imagen": "wix:image://v1/cdc54a_abc~mv2.jpg/y.jpg#originWidth=1980&originHeight=1113",
+              "agua": "✓ Agua",
+              "luz": "✓ Luz"
+            },
+            "rec3": {
+              "title": "Fuera de región",
+              "url": "https://www.buenasparcelas.cl/talca-parcela",
+              "valor": "$30.000.000",
+              "ciudad": "Talca",
+              "area": "✓ 5.000 m²",
+              "VentaTipo": "☺Terminado",
+              "tipo": "Arboleda",
+              "imagen": "",
+              "agua": "✓ Agua"
+            }
+          }
+        }
+      }
+    }
+  }
+}

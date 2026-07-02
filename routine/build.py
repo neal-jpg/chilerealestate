@@ -89,7 +89,6 @@ def main(run_date, alert_csv_url=None, model_call=None, publish=False):
     alert_csv_url / model_call stay None until the Make->Sheet pipeline and the
     cloud routine's Claude are wired; alerts are skipped until then.
     """
-    import time
     from .sources import buenasparcelas, alerts
     from . import state as state_mod
     from . import publish as publish_mod
@@ -135,7 +134,6 @@ def main(run_date, alert_csv_url=None, model_call=None, publish=False):
                 check_fn=lambda: publish_mod.build_date_from_meta(publish_mod.fetch_text(url)),
                 retrigger_fn=lambda: publish_mod.retrigger(REPO_DIR),
                 attempts=config.DEPLOY_ATTEMPTS,
-                wait_fn=lambda: time.sleep(90),
             )
             if not ok:
                 print("WARNING: Pages deploy did not confirm after retries")

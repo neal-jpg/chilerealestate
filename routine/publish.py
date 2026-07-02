@@ -47,13 +47,19 @@ def build_date_from_meta(meta_text):
         return None
 
 
-def verify_deploy(expected_date, check_fn, retrigger_fn, attempts, wait_fn=time.sleep):
-    """Poll check_fn() for expected_date; re-trigger and retry if stale. Returns
-    True once the live build_date matches, False if all attempts are exhausted.
-    check_fn/retrigger_fn/wait_fn are injected so the loop is testable offline."""
-    for _ in range(attempts):
-        wait_fn()
-        if check_fn() == expected_date:
-            return True
-        retrigger_fn()
+def verify_deploy(expected_date, check_fn, retrigger_fn, attempts,
+                  polls=5, poll_seconds=30, sleep_fn=time.sleep):
+    """Confirm the live build_date matches expected_date. Within each attempt,
+    poll up to `polls` times (sleeping poll_seconds between checks) to let a
+    normal deploy land, and only retrigger if it never shows up — so a slow but
+    successful deploy doesn't spawn a spurious empty commit. Returns True once
+    matched, False after all attempts are exhausted. sleep_fn is injected so the
+    loop runs instantly in tests."""
+    for attempt in range(attempts):
+        for _ in range(polls):
+            sleep_fn(poll_seconds)
+            if check_fn() == expected_date:
+                return True
+        if attempt < attempts - 1:
+            retrigger_fn()
     return False

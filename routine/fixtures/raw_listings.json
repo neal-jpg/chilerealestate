@@ -1,0 +1,30 @@
+[
+  {
+    "url": "https://www.yapo.cl/x/123", "title": "Casa 3D orilla lago",
+    "source": "Yapo", "region": "IX", "comuna": "Pucón", "class": "turnkey",
+    "type": "House", "status": "Built", "raw_price": 347990000, "currency": "CLP",
+    "m2": 140, "water": true, "power": true, "access": null,
+    "image_url": "https://example.com/broken-a.jpg"
+  },
+  {
+    "url": "https://buenasparcelas.cl/p/55", "title": "Parcela 5.000 m², camino Villarrica",
+    "source": "BuenasParcelas", "region": "IX", "comuna": "Villarrica", "class": "parcela",
+    "type": "Parcela", "status": "Project", "raw_price": 93840000, "currency": "CLP",
+    "m2": 5000, "water": true, "power": true, "access": true,
+    "image_url": "https://example.com/broken-b.jpg"
+  },
+  {
+    "url": "https://southernchileproperties.com/l/9", "title": "Cabaña con vista, Valdivia",
+    "source": "SouthernChile", "region": "XIV", "comuna": "Valdivia", "class": "turnkey",
+    "type": "Cabin", "status": "Built", "raw_price": 254000, "currency": "USD",
+    "m2": 95, "water": true, "power": true, "access": null,
+    "image_url": "https://example.com/broken-c.jpg"
+  },
+  {
+    "url": "https://buenasparcelas.cl/p/77", "title": "Parcela 3.000 m², Puerto Varas",
+    "source": "BuenasParcelas", "region": "X", "comuna": "Puerto Varas", "class": "parcela",
+    "type": "Parcela", "status": "Built", "raw_price": 70380000, "currency": "CLP",
+    "m2": 3000, "water": true, "power": false, "access": true,
+    "image_url": ""
+  }
+]

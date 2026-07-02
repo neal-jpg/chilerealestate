@@ -1,9 +1,25 @@
 {
-  "build_date": "2026-07-01",
+  "build_date": "2026-07-02",
   "regions": [
-    { "code": "IX", "name": "Araucanía", "order": 1 },
-    { "code": "XIV", "name": "Los Ríos", "order": 2 },
-    { "code": "X", "name": "Los Lagos", "order": 3 }
+    {
+      "code": "IX",
+      "name": "Araucanía",
+      "order": 1
+    },
+    {
+      "code": "XIV",
+      "name": "Los Ríos",
+      "order": 2
+    },
+    {
+      "code": "X",
+      "name": "Los Lagos",
+      "order": 3
+    }
   ],
-  "thin_coverage": []
+  "thin_coverage": [
+    "IX",
+    "XIV",
+    "X"
+  ]
 }

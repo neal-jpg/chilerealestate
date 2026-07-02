@@ -16,3 +16,9 @@ def test_town_region_maps_into_active_regions_only():
     for town, (region, comuna) in config.TOWN_REGION.items():
         assert region in config.ACTIVE_REGION_CODES
         assert comuna  # canonical name present
+
+
+def test_publish_config_present():
+    from routine import config
+    assert config.PAGES_URL.startswith("https://")
+    assert config.DEPLOY_ATTEMPTS >= 1

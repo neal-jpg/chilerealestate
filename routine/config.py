@@ -62,3 +62,7 @@ TOWN_REGION = {
     "Río Negro": ("X", "Río Negro"),
     "Tegualda": ("X", "Tegualda"),
 }
+
+# Self-publish / deploy.
+PAGES_URL = "https://neal-jpg.github.io/chilerealestate/"
+DEPLOY_ATTEMPTS = 3          # how many times to confirm/re-trigger a Pages deploy

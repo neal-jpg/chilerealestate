@@ -38,3 +38,27 @@ PRICE_DROP_TRIGGER = 5    # a recorded drop >= 5% -> Strong
 
 # A region with fewer than this many active listings shows a thin-coverage banner.
 THIN_THRESHOLD = 3
+
+# BuenasParcelas scraping.
+BUENASPARCELAS_URL = "https://www.buenasparcelas.cl/"
+
+# Map BuenasParcelas town names (as they appear in the site's `ciudad` field,
+# accents inconsistent) -> (region code, canonical accented comuna). Towns not
+# listed here are outside the Phase-1 regions and are dropped during scraping.
+TOWN_REGION = {
+    "Pucon": ("IX", "Pucón"),
+    "Villarrica": ("IX", "Villarrica"),
+    "Temuco": ("IX", "Temuco"),
+    "Panguipulli": ("XIV", "Panguipulli"),
+    "Lago Ranco": ("XIV", "Lago Ranco"),
+    "Río Bueno": ("XIV", "Río Bueno"),
+    "Los Lagos": ("XIV", "Los Lagos"),
+    "Frutillar": ("X", "Frutillar"),
+    "Llanquihue": ("X", "Llanquihue"),
+    "Osorno": ("X", "Osorno"),
+    "Puerto Octay": ("X", "Puerto Octay"),
+    "Puerto Varas": ("X", "Puerto Varas"),
+    "Puyehue": ("X", "Puyehue"),
+    "Río Negro": ("X", "Río Negro"),
+    "Tegualda": ("X", "Tegualda"),
+}

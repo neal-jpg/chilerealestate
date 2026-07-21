@@ -63,6 +63,13 @@ TOWN_REGION = {
     "Tegualda": ("X", "Tegualda"),
 }
 
+# Yapo/Portal alert inbox: the Make -> Google-Sheet, published to the web as CSV
+# (columns: received_at, sender, subject, body). The routine reads this and
+# Claude extracts listings (see routine/sources/alerts.py). The extraction model
+# call needs ANTHROPIC_API_KEY in the environment (never in the repo); override
+# the model with ALERT_MODEL if desired.
+ALERT_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTUTofANCXF_n7jejA4mVWkDmL1mnNHCB6Cv-caEeJ4YD-Qvc7CmhqNUmeyuVWVpQJV-b9mgeMXwPrQ/pub?gid=655206990&single=true&output=csv"
+
 # Self-publish / deploy.
 PAGES_URL = "https://neal-jpg.github.io/chilerealestate/"
 DEPLOY_ATTEMPTS = 3          # how many times to confirm/re-trigger a Pages deploy

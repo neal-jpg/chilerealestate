@@ -143,4 +143,15 @@ def main(run_date, alert_csv_url=None, model_call=None, publish=False):
 
 if __name__ == "__main__":
     from datetime import date
-    main(run_date=date.today().isoformat(), publish=True)
+    from .model import resolve_model_call
+
+    # Extraction prefers the local claude CLI (the cloud routine is already a
+    # Claude agent — no API key to manage), falls back to ANTHROPIC_API_KEY,
+    # and with neither available main() skips alerts and publishes
+    # BuenasParcelas listings exactly as before.
+    main(
+        run_date=date.today().isoformat(),
+        alert_csv_url=config.ALERT_CSV_URL,
+        model_call=resolve_model_call(),
+        publish=True,
+    )

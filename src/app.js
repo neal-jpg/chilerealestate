@@ -7,6 +7,7 @@ import { formatUf, escapeHtml } from './format.js';
 
 const state = {
   region: 'All',
+  type: 'All',
   tab: 'listings',
   article: null,
   openHistory: new Set(),
@@ -54,7 +55,7 @@ function savedViewHtml() {
 
 function bodyHtml() {
   if (state.tab === 'listings') {
-    return listingsHtml(data.listings, saved, state.region, thinForRegion());
+    return listingsHtml(data.listings, saved, state.region, thinForRegion(), state.type);
   }
   if (state.tab === 'saved') {
     return savedViewHtml();
@@ -82,10 +83,15 @@ function render() {
 }
 
 function onClick(e) {
-  const el = e.target.closest('[data-action], [data-region], [data-tab]');
+  const el = e.target.closest('[data-action], [data-region], [data-type], [data-tab]');
   if (!el) return;
   if (el.dataset.region) {
     state.region = el.dataset.region;
+    render();
+    return;
+  }
+  if (el.dataset.type) {
+    state.type = el.dataset.type;
     render();
     return;
   }

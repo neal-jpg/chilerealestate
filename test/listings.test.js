@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cardHtml, groupByComuna, listingsHtml } from '../src/listings.js';
+import { cardHtml, groupByComuna, listingsHtml, listingKind, typeChipsHtml } from '../src/listings.js';
 
 const turnkey = {
   id: 'a', url: 'a', title: 'Casa <lago>', source: 'Yapo', region: 'IX', comuna: 'Pucón',
@@ -97,4 +97,42 @@ test('card links the source label to the original listing url', () => {
 test('card omits the m2 pill when size is unknown', () => {
   const html = cardHtml({ ...turnkey, m2: null }, []);
   assert.doesNotMatch(html, /m²/);
+});
+
+test('listingKind collapses any parcela-class into Land, keeps turnkey type', () => {
+  assert.equal(listingKind({ class: 'parcela', type: 'Parcela' }), 'Land');
+  assert.equal(listingKind({ class: 'parcela', type: 'Land' }), 'Land');
+  assert.equal(listingKind({ class: 'turnkey', type: 'Apartment' }), 'Apartment');
+  assert.equal(listingKind({ class: 'turnkey', type: 'House' }), 'House');
+});
+
+test('apartment card labels the type strip Apartment, not House', () => {
+  const html = cardHtml({ ...turnkey, type: 'Apartment' }, []);
+  assert.match(html, /ti-building/);
+  assert.match(html, />Apartment</);
+});
+
+test('type chips render only kinds present, with an All chip', () => {
+  const chips = typeChipsHtml([turnkey, parcela], 'All');
+  assert.match(chips, /data-type="All"/);
+  assert.match(chips, /data-type="House"/);
+  assert.match(chips, /data-type="Land"/);
+  assert.doesNotMatch(chips, /data-type="Apartment"/); // none present in the set
+});
+
+test('type chips mark the active kind', () => {
+  const chips = typeChipsHtml([turnkey, parcela], 'Land');
+  assert.match(chips, /class="tab tab--on" data-type="Land"/);
+});
+
+test('listingsHtml filters to the chosen kind and drops the rest', () => {
+  const html = listingsHtml([turnkey, parcela], [], 'All', false, 'Land');
+  assert.match(html, /Villarrica/);               // the parcela's comuna group renders
+  assert.doesNotMatch(html, /Casa &lt;lago&gt;/); // the house card is filtered out
+});
+
+test('card omits the status pill when status is null or the string "null"', () => {
+  assert.doesNotMatch(cardHtml({ ...turnkey, status: null }, []), />null</);
+  assert.doesNotMatch(cardHtml({ ...turnkey, status: 'null' }, []), />null</);
+  assert.match(cardHtml({ ...turnkey, status: 'Built' }, []), />Built</);
 });

@@ -39,6 +39,10 @@
     {
       "date": "2026-07-02",
       "price_uf": 639
+    },
+    {
+      "date": "2026-07-21",
+      "price_uf": 765
     }
   ],
   "https://www.buenasparcelas.cl/fundo-santa-nelly": [
@@ -57,12 +61,20 @@
     {
       "date": "2026-07-02",
       "price_uf": 716
+    },
+    {
+      "date": "2026-07-21",
+      "price_uf": 895
     }
   ],
   "https://www.buenasparcelas.cl/brisasdebaquedano": [
     {
       "date": "2026-07-02",
       "price_uf": 734
+    },
+    {
+      "date": "2026-07-21",
+      "price_uf": 765
     }
   ],
   "https://www.buenasparcelas.cl/paisajesderupanco2": [
@@ -213,6 +225,12 @@
     {
       "date": "2026-07-02",
       "price_uf": 2558
+    }
+  ],
+  "https://www.buenasparcelas.cl/reserva-panguipulli": [
+    {
+      "date": "2026-07-21",
+      "price_uf": 767
     }
   ]
 }

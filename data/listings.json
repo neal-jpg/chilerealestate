@@ -23,7 +23,7 @@
     "opportunity_reason": "Priced about 53% below the typical parcela in the area by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -50,7 +50,7 @@
     "opportunity_reason": "Priced about 42% below the typical parcela in the area by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -77,7 +77,7 @@
     "opportunity_reason": "Priced about 35% below the typical parcela in Puyehue by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -104,7 +104,7 @@
     "opportunity_reason": "Priced about 37% below the typical parcela in the area by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -131,7 +131,7 @@
     "opportunity_reason": "Priced about 29% below the typical parcela in Puyehue by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -158,7 +158,7 @@
     "opportunity_reason": "Priced about 47% below the typical parcela in the area by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -171,10 +171,10 @@
     "class": "parcela",
     "type": "Parcela",
     "status": "Project",
-    "price_uf": 639,
-    "price_usd": 26000,
+    "price_uf": 765,
+    "price_usd": 31000,
     "m2": 5000,
-    "price_per_m2_uf": 0.13,
+    "price_per_m2_uf": 0.15,
     "water": true,
     "power": true,
     "access": null,
@@ -182,10 +182,10 @@
     "yield_band": null,
     "opportunity": "Strong",
     "opportunity_basis": "region",
-    "opportunity_reason": "Priced about 32% below the typical parcela in the area by price/m², and it has water and power.",
+    "opportunity_reason": "Priced about 21% below the typical parcela in the area by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -212,7 +212,7 @@
     "opportunity_reason": "Priced about 26% below the typical parcela in the area by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -239,7 +239,7 @@
     "opportunity_reason": "Priced about 26% below the typical parcela in the area by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -252,21 +252,21 @@
     "class": "parcela",
     "type": "Parcela",
     "status": "Built",
-    "price_uf": 716,
-    "price_usd": 29000,
+    "price_uf": 895,
+    "price_usd": 37000,
     "m2": 5000,
-    "price_per_m2_uf": 0.14,
+    "price_per_m2_uf": 0.18,
     "water": true,
     "power": true,
     "access": null,
     "image_url": "https://static.wixstatic.com/media/cdc54a_3ca9409cb7584203bab03fb6ce343af7~mv2.jpg",
     "yield_band": null,
-    "opportunity": "Strong",
+    "opportunity": "Fair",
     "opportunity_basis": "region",
-    "opportunity_reason": "Priced about 30% below the typical parcela in the area by price/m², and it has water and power.",
+    "opportunity_reason": "Priced in line with other parcelas in the area.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -279,8 +279,8 @@
     "class": "parcela",
     "type": "Parcela",
     "status": "Built",
-    "price_uf": 734,
-    "price_usd": 30000,
+    "price_uf": 765,
+    "price_usd": 31000,
     "m2": 5000,
     "price_per_m2_uf": 0.15,
     "water": true,
@@ -293,7 +293,7 @@
     "opportunity_reason": "Priced about 21% below the typical parcela in the area by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -320,7 +320,7 @@
     "opportunity_reason": "Priced in line with other parcelas in Puyehue.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -342,12 +342,12 @@
     "access": null,
     "image_url": "https://static.wixstatic.com/media/cdc54a_dd1e355a01964d479b78ba9504ab6f7d~mv2.jpg",
     "yield_band": null,
-    "opportunity": "Strong",
+    "opportunity": "Fair",
     "opportunity_basis": "region",
-    "opportunity_reason": "Priced about 15% below the typical parcela in the area by price/m², and it has water and power.",
+    "opportunity_reason": "Priced in line with other parcelas in the area.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -374,7 +374,7 @@
     "opportunity_reason": "Priced about 20% below the typical parcela in the area by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -401,7 +401,7 @@
     "opportunity_reason": "Priced in line with other parcelas in the area.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -428,7 +428,7 @@
     "opportunity_reason": "Priced about 39% below the typical parcela in Puerto Octay by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -455,7 +455,7 @@
     "opportunity_reason": "Priced in line with other parcelas in Puyehue.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -482,7 +482,7 @@
     "opportunity_reason": "Priced about 35% below the typical parcela in Puerto Octay by price/m², and it has water and power.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -509,7 +509,7 @@
     "opportunity_reason": "Priced in line with other parcelas in the area.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -536,7 +536,7 @@
     "opportunity_reason": "Priced about 18% above the typical parcela in Puyehue by price/m².",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -563,7 +563,7 @@
     "opportunity_reason": "Priced in line with other parcelas in the area.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -590,7 +590,7 @@
     "opportunity_reason": "Priced in line with other parcelas in the area.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -617,7 +617,7 @@
     "opportunity_reason": "Priced in line with other parcelas in the area.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -639,12 +639,12 @@
     "access": null,
     "image_url": "https://static.wixstatic.com/media/cdc54a_1b6f28be82c14249a39b960a9154e5be~mv2.jpg",
     "yield_band": null,
-    "opportunity": "Fair",
+    "opportunity": "Watch",
     "opportunity_basis": "region",
-    "opportunity_reason": "Priced in line with other parcelas in the area.",
+    "opportunity_reason": "Priced about 18% above the typical parcela in the area by price/m².",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -671,7 +671,7 @@
     "opportunity_reason": "Priced about 26% above the typical parcela in the area by price/m².",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -698,7 +698,7 @@
     "opportunity_reason": "Priced in line with other parcelas in the area.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -725,7 +725,7 @@
     "opportunity_reason": "Priced in line with other parcelas in the area.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -749,10 +749,10 @@
     "yield_band": null,
     "opportunity": "Watch",
     "opportunity_basis": "region",
-    "opportunity_reason": "Priced about 30% above the typical parcela in the area by price/m².",
+    "opportunity_reason": "Priced about 33% above the typical parcela in the area by price/m².",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -779,7 +779,7 @@
     "opportunity_reason": "Priced about 37% above the typical parcela in the area by price/m².",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -803,10 +803,10 @@
     "yield_band": null,
     "opportunity": "Watch",
     "opportunity_basis": "region",
-    "opportunity_reason": "Priced about 45% above the typical parcela in the area by price/m².",
+    "opportunity_reason": "Priced about 49% above the typical parcela in the area by price/m².",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -833,7 +833,7 @@
     "opportunity_reason": "Priced about 71% above the typical parcela in Puyehue by price/m².",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -860,7 +860,7 @@
     "opportunity_reason": "Priced in line with other parcelas in Puerto Octay.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -887,7 +887,7 @@
     "opportunity_reason": "Priced about 64% above the typical parcela in the area by price/m².",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -914,7 +914,7 @@
     "opportunity_reason": "Priced about 32% above the typical parcela in Puerto Octay by price/m².",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -941,7 +941,7 @@
     "opportunity_reason": "Priced about 65% above the typical parcela in Puerto Octay by price/m².",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
     "active": true
   },
   {
@@ -968,7 +968,34 @@
     "opportunity_reason": "Missing water or power, which you'd need before building.",
     "price_drop_pct": null,
     "first_seen": "2026-07-02",
-    "last_seen": "2026-07-02",
+    "last_seen": "2026-07-21",
+    "active": true
+  },
+  {
+    "id": "https://www.buenasparcelas.cl/reserva-panguipulli",
+    "url": "https://www.buenasparcelas.cl/reserva-panguipulli",
+    "title": "Reserva Panguipulli",
+    "source": "BuenasParcelas",
+    "region": "XIV",
+    "comuna": "Panguipulli",
+    "class": "parcela",
+    "type": "Parcela",
+    "status": "Project",
+    "price_uf": 767,
+    "price_usd": 32000,
+    "m2": 5000,
+    "price_per_m2_uf": 0.15,
+    "water": true,
+    "power": true,
+    "access": null,
+    "image_url": "https://static.wixstatic.com/media/cdc54a_cdd1886cfb34424ba32b3aad8e137f31~mv2.jpeg",
+    "yield_band": null,
+    "opportunity": "Strong",
+    "opportunity_basis": "region",
+    "opportunity_reason": "Priced about 23% below the typical parcela in the area by price/m², and it has water and power.",
+    "price_drop_pct": null,
+    "first_seen": "2026-07-21",
+    "last_seen": "2026-07-21",
     "active": true
   }
 ]

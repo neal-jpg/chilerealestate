@@ -35,3 +35,16 @@ def test_verify_deploy_gives_up_after_attempts():
     ok = verify_deploy("target", lambda: "stale", lambda: None,
                        attempts=2, polls=2, poll_seconds=0, sleep_fn=lambda s: None)
     assert ok is False
+
+
+def test_cache_bust_plain_url():
+    from routine.publish import cache_bust
+    assert cache_bust("https://x.com/meta.json", 5) == "https://x.com/meta.json?cb=5"
+
+
+def test_cache_bust_url_with_existing_query():
+    from routine.publish import cache_bust
+    # A published-sheet CSV URL already carries ?gid=...&output=csv — a second
+    # "?" corrupts the last param and Google answers 400.
+    out = cache_bust("https://docs.google.com/pub?gid=1&output=csv", 5)
+    assert out == "https://docs.google.com/pub?gid=1&output=csv&cb=5"

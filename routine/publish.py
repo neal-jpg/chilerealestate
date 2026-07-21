@@ -32,10 +32,15 @@ def retrigger(repo_dir):
     run_git(["push"], repo_dir)
 
 
+def cache_bust(url, ts):
+    """Append a cb= cache-buster, honoring any existing query string."""
+    sep = "&" if "?" in url else "?"
+    return f"{url}{sep}cb={ts}"
+
+
 def fetch_text(url):
     """Fetch a URL's text, cache-busted. Network shell."""
-    busted = f"{url}?cb={int(time.time())}"
-    with urllib.request.urlopen(busted, timeout=20) as resp:
+    with urllib.request.urlopen(cache_bust(url, int(time.time())), timeout=20) as resp:
         return resp.read().decode("utf-8", errors="replace")
 
 
